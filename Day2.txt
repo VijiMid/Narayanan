@@ -1,0 +1,618 @@
+Que 15: 
+public class P15 {
+
+    public static void main(String[] args) {
+        int[] arr1 = {1, 3, 5, 7};
+        int[] arr2 = {2, 4, 6, 8};
+
+        int[] mergedArray = mergeSortedArrays(arr1, arr2); 
+        for (int num : mergedArray) {
+            System.out.print(num + " ");
+        }
+    }
+
+    public static int[] mergeSortedArrays(int[] arr1, int[] arr2) {
+        int n1 = arr1.length;
+        int n2 = arr2.length;
+        int[] result = new int[n1 + n2];
+
+        int i = 0, j = 0, k = 0;
+ 
+        while (i < n1 && j < n2) {
+            if (arr1[i] <= arr2[j]) {
+                result[k++] = arr1[i++];
+            } else {
+                result[k++] = arr2[j++];
+            }
+        }
+ 
+        while (i < n1) {
+            result[k++] = arr1[i++];
+        }
+ 
+        while (j < n2) {
+            result[k++] = arr2[j++];
+        }
+
+        return result;
+    }
+}
+
+Explanation :
+
+Step 1: Main Method Initialization
+> Define arr1 and arr2 as sorted input arrays.
+> Call mergeSortedArrays(arr1, arr2).
+> Store result in mergedArray.
+
+Step 2: Function Definition
+> Calculate lengths n1 and n2 of arr1 and arr2.
+> Create result array of size n1 + n2.
+
+Step 3: Initialization of Variables
+> Initialize pointers i, j, k to 0.
+
+Step 4: Merging Arrays
+> Use a while loop to traverse arr1 and arr2 until i reaches n1 or j reaches n2.
+> Compare elements at arr1[i] and arr2[j].
+> If arr1[i] <= arr2[j], insert arr1[i] into result, increment i and k.
+> Else, insert arr2[j] into result, increment j and k.
+
+Step 5: Append Remaining Elements of arr1
+> Use a while loop to copy remaining elements of arr1 to result if i < n1.
+> Increment i and k accordingly.
+
+Step 6: Append Remaining Elements of arr2
+> Use a while loop to copy remaining elements of arr2 to result if j < n2.
+> Increment j and k accordingly.
+
+Step 7: Return and Print the Result
+> Return result array from mergeSortedArrays function.
+> In main, print elements of mergedArray.
+=======================================================================================================================
+Que 16:  Delete prime number from an array
+
+public class P16 {
+
+    public static void main(String[] args) {
+        int[] arr = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+
+        int[] result = removePrimeNumbers(arr);
+        for (int num : result) {
+            System.out.print(num + " ");
+        }
+    }
+ 
+    public static int[] removePrimeNumbers(int[] arr) {
+        int count = 0;
+ 
+        for (int num : arr) {
+            if (!isPrime(num)) {
+                count++;
+            }
+        }
+ 
+        int[] result = new int[count];
+        int index = 0;
+ 
+        for (int num : arr) {
+            if (!isPrime(num)) {
+                result[index++] = num;
+            }
+        }
+
+        return result;
+    }
+ 
+    private static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+}
+
+Explanation:
+
+Step 1: Main Method Initialization
+> Define the Input Array:
+   * An array arr is initialized with integers, some of which are prime numbers.
+   * Example: int[] arr = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+> Call the Method to Remove Prime Numbers:
+> The removePrimeNumbers method is called with arr as an argument.
+> The result is stored in the result array.
+   * Example: int[] result = removePrimeNumbers(arr);
+> Print the Resulting Array:
+> A for-each loop is used to print each element of the result array.
+Example: for (int num : result) { System.out.print(num + " "); }
+
+Step 2: Remove Prime Numbers Method
+> Count Non-Prime Numbers:
+> Initialize a counter count to zero.
+> Loop through each element num in arr and check if it is not prime.
+> If num is not prime, increment the count by one.
+> Example: for (int num : arr) { if (!isPrime(num)) { count++; } }
+> Create a New Array for Non-Prime Numbers:
+> Create a new array result with the size equal to the count of non-prime numbers.
+   Example: int[] result = new int[count];
+> Fill the Result Array with Non-Prime Numbers:
+> Initialize an index variable index to zero.
+> Loop through each element num in arr again and check if it is not prime.
+> If num is not prime, assign num to result[index] and increment the index by one.
+   Example: for (int num : arr) { if (!isPrime(num)) { result[index++] = num; } }
+> Return the Result Array:
+Return the result array which now contains only non-prime numbers.
+Example: return result;
+
+Step 3: Prime Check Method
+> Implement the isPrime Method:
+> This method takes an integer num as input and returns true if it is prime, false otherwise.
+> Numbers less than or equal to 1 are not prime.
+> Loop from 2 to the square root of num.
+> If num is divisible by any number in this range, it is not prime.
+> Example: if (num <= 1) return false; for (int i = 2; i <= Math.sqrt(num); i++) { if (num % i == 0) return false; } return true;
+=================================================================================================
+Que 17: Spiral pattern
+
+import java.util.Scanner;
+
+public class P17 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter N: ");
+        int N = scanner.nextInt();
+        int[][] A = new int[N][N];
+        int p = 1, R, C;
+        R = C = N;
+
+        for (int l = 0; l < (N / 2); l++) {
+            for (int j = l; j < C; j++) {
+                A[l][j] = p;
+                p++;
+            }
+            for (int i = l + 1; i < R; i++) {
+                A[i][C - 1] = p;
+                p++;
+            }
+            for (int j = C - 2; j >= l; j--) {
+                A[R - 1][j] = p;
+                p++;
+            }
+            for (int i = R - 2; i > l; i--) {
+                A[i][l] = p;
+                p++;
+            }
+            C -= 1;
+            R -= 1;
+        }
+
+        if (N % 2 == 1) {
+            A[N / 2][N / 2] = N * N;
+        }
+
+        // Display section
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print("\t" + A[i][j]);
+            }
+            System.out.println();
+        }
+
+        System.out.println("Powerpoints are: ");
+        System.out.println("\t(0,0)");
+        for (int i = N - 1; i >= 0; i--) {
+            for (int j = N - 1; j >= 0; j--) {
+                if (A[i][j] % 11 == 0) {
+                    System.out.println("\t(" + i + "," + j + ")");
+                }
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
+Explanation :
+
+Step 1: Importing Scanner and Main Class Definition
+
+Step 2: Main Method
+ > Creating Scanner Object:
+ > Create an instance of the Scanner class to read input from the user.
+
+Step 3: Reading Input
+> Print a message to the console asking the user to enter the value of N.
+> Use the scanner.nextInt() method to read the integer value of N from the user.
+
+Step 4: Array Initialization
+> Declare and initialize a 2D array A of size N x N.
+> Initialize integer variables p to 1, and R and C to N.
+
+Step 5: Filling the Spiral Matrix
+> Use a for loop to iterate through each layer of the spiral matrix. The loop runs from 0 to N/2.
+   * Top Row: Use a nested for loop to fill the top row of the current layer.
+   * Right Column: Use a for loop to fill the right column of the current layer.
+   * Bottom Row: Use a for loop to fill the bottom row of the current layer.
+   * Left Column: Use a for loop to fill the left column of the current layer.
+
+> Update R and C:
+Decrement R and C by 1 after filling each layer to move to the next inner layer.
+
+Step 6: Handling Odd N
+> If N is odd, set the center element of the matrix to N * N.
+
+Step 7: Display the Matrix
+> Use a for loop to iterate through each row of the matrix.
+> Use a nested for loop to iterate through each column of the matrix.
+> Print each element of the matrix with a tab space in between.
+> Print a new line after each row to format the output properly.
+
+Step 8: Identify and Display Powerpoints
+> Print the initial power point (0,0).
+Outer Loop for Rows: Use a for loop to iterate through each row of the matrix in reverse order.
+Inner Loop for Columns: Use a nested for loop to iterate through each column of the matrix in reverse order.
+Check for Powerpoints: Check if the element is divisible by 11.
+
+Print Powerpoints: Print the coordinates of the elements that are divisible by 11.
+
+Step 9: Close Scanner
+-------------------------------------------------------------------------------- 
+Que 18: Find the Second largest element from the array:
+
+public class P18 {
+
+    public static void main(String[] args) {
+        int[] arr = {12, 35, 1, 10, 34, 1};
+
+        int secondLargest = findSecondLargest(arr);
+        if (secondLargest == Integer.MIN_VALUE) {
+            System.out.println("There is no distinct second largest element.");
+        } else {
+            System.out.println("The second largest element is: " + secondLargest);
+        }
+    }
+
+    public static int findSecondLargest(int[] arr) {
+        if (arr.length < 2) { 
+            return Integer.MIN_VALUE;
+        }
+
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
+
+        for (int num : arr) {
+            if (num > largest) {
+                secondLargest = largest;
+                largest = num;
+            } else if (num > secondLargest && num < largest) {
+                secondLargest = num;
+            }
+        }
+
+           return secondLargest;
+    }
+}
+
+Explanation :
+Step1 : Initialize Main Method:
+1.1. Define an array arr with the given elements.
+1.2. Call findSecondLargest(arr) and store the result in secondLargest.
+1.3. Check if secondLargest equals Integer.MIN_VALUE:
+- If true, print "No distinct second largest element."
+- Otherwise, print "The second largest element is: " followed by the value of secondLargest.
+
+Step 2: Define findSecondLargest Method:
+2.1. Check Array Length:
+- If the array length is less than 2, return Integer.MIN_VALUE (indicating insufficient elements).
+
+2.2. Initialize Variables:
+- Set largest to Integer.MIN_VALUE.
+- Set secondLargest to Integer.MIN_VALUE.
+
+2.3. Iterate Through Array:
+- For each element in the array:
+- If the current element is greater than largest:
+- Update secondLargest to the value of largest.
+- Update largest to the current element.
+- Else if the current element is greater than secondLargest but less than largest:
+- Update secondLargest to the current element.
+
+2.4. Return Result:
+- Return secondLargest. If no distinct second largest element is found, it will still be Integer.MIN_VALUE.
+================================================================================================================= 
+Que 19 : Jagged Array.
+
+public class P19
+{
+    public static void main(String[] args)
+    {
+        int[] O1 = {1, 2, 3};   // dense array 
+        int[] O2 = {4, 5, 6, 7}; 
+        int[] O3 = {8, 9, 10, 11, 12}; 
+        int[][] T = {O1,O2,O3};   // { {1, 2, 3},{4, 5, 6, 7}, {8, 9, 10, 11, 12}}
+ 
+        for (int i = 0; i < T.length; i++)  // T.length - counts Row - 3
+        {
+            for (int j = 0; j < T[i].length; j++)
+            {
+                System.out.print(T[i][j]+"\t");
+            }
+            System.out.println();
+        }
+    }
+}
+
+// combination of single dimentional array is called jagged Array
+//   for (int j = 0; j < T[i].length; j++)
+================================================================================================================= 
+Que 20: 2d Matrix Arithmetic Operation
+public class P20 {
+
+    public static void main(String[] args) {
+        int[][] matrixA = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        int[][] matrixB = {
+            {9, 8, 7},
+            {6, 5, 4},
+            {3, 2, 1}
+        };
+
+        String operation = "multiplication";  
+        int[][] result = performMatrixOperation(matrixA, matrixB, operation);
+        
+        if (result != null) {
+            System.out.println("Matrix " + operation + ":");
+            printMatrix(result);
+        } else {
+            System.out.println("Invalid operation or matrix dimensions.");
+        }
+    }
+
+    public static int[][] performMatrixOperation(int[][] A, int[][] B, String operation) {
+        int rowsA = A.length;
+        int colsA = A[0].length;
+        int rowsB = B.length;
+        int colsB = B[0].length;
+
+        int[][] result = null;
+
+        if (operation.equals("addition") || operation.equals("subtraction")) {
+            if (rowsA == rowsB && colsA == colsB) {
+                result = new int[rowsA][colsA];
+                for (int i = 0; i < rowsA; i++) {
+                    for (int j = 0; j < colsA; j++) {
+                        if (operation.equals("addition")) {
+                            result[i][j] = A[i][j] + B[i][j];
+                        } else if (operation.equals("subtraction")) {
+                            result[i][j] = A[i][j] - B[i][j];
+                        }
+                    }
+                }
+            }
+        } else if (operation.equals("multiplication")) {
+            if (colsA == rowsB) {
+                result = new int[rowsA][colsB];
+                for (int i = 0; i < rowsA; i++) {
+                    for (int j = 0; j < colsB; j++) {
+                        result[i][j] = 0;
+                        for (int k = 0; k < colsA; k++) {
+                            result[i][j] += A[i][k] * B[k][j];
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int val : row) {
+                System.out.print(val + "\t");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+Explanation:
+
+Step 1 :Initialize Matrices and Operation:
+> Define matrixA and matrixB.
+> Set operation to "multiplication" (or "addition"/"subtraction").
+> Use performMatrixOperation with matrixA, matrixB, and the operation.
+
+Step 2 : Perform Matrix Operation (performMatrixOperation):
+> Check Dimensions:
+  * For addition/subtraction: Ensure dimensions match.
+  * For multiplication: Ensure columns of A match rows of B.
+
+> Initialize Result Matrix:
+  * Create a result matrix of appropriate size.
+  * Perform Calculation:
+  * For addition/subtraction: Add or subtract corresponding elements.
+  * For multiplication: Calculate dot products.
+
+> Print Result:
+Use printMatrix to display the result.
+If result is null, print an error message.
+Print Matrix Method (printMatrix):
+
+> Print Elements:
+Iterate through rows and columns.
+Print elements formatted with tabs.
+=====================================================================================================================
+Que 21: Find Substring from given string
+
+public class P21 {
+
+    public static void main(String[] args) {
+        String s = "Hello, World!";
+        int start = 7;   
+        int end = 12;    
+         
+        String sub = extractSub(s, start, end);
+         
+        System.out.println("Substring: " + sub);
+    }
+
+    public static String extractSub(String s, int start, int end) {
+        
+        if (start < 0 || end > s.length() || start > end) {
+            return "";  
+        }
+ 
+        char[] chars = new char[end - start];
+ 
+        for (int i = start; i < end; i++) {
+            chars[i - start] = s.charAt(i);
+        }
+ 
+        return new String(chars);
+    }
+}
+
+Explanation :
+> Define a string s with the value "Hello, World!".
+> Set start to 7 and end to 12 to specify the range of the substring.
+> Call extractSub Method:   
+   * Pass the string s, start index, and end index to the extractSub method.
+> Store the returned substring in sub.
+> Print the Result:
+Output the value of sub to the console.
+> Define extractSub Method:
+> Check Index Validity:
+Ensure start is not less than 0, end does not exceed the length of s, and start is less than or equal to end.
+If any condition is invalid, return an empty string.
+> Initialize Character Array:
+Create a char array chars with a size equal to end - start.
+>Copy Characters:
+Iterate from start to end - 1.
+> Assign characters from the string s to the chars array based on the current index.
+> Convert to String:
+Convert the chars array to a String and return it.
+================================================================================================
+Que 22 : Reverse using recursion
+
+public class P22 {
+
+    public static void main(String[] args) {
+        String s = "Hello, World!";
+        String reversed = reverse(s);
+        System.out.println("Reversed String: " + reversed);
+    }
+
+    public static String reverse(String s) { 
+        if (s == null || s.length() <= 1) {
+            return s;
+        } 
+        return reverse(s.substring(1)) + s.charAt(0);
+    }
+}
+
+Explanation :
+> Main Method
+   * Initialize String: Define and initialize the string s with "Hello, World!".
+   * Reverse Call: Call reverse(s) to reverse the string.
+   * Print Result: Print the reversed string.
+> Reverse Method
+   * Base Case: If s is null or length ≤ 1, return s.
+
+> Recursive Step:
+  * Call reverse on s.substring(1).
+> Append s.charAt(0) to the result of the recursive call.
+> Return: Combine and return the reversed result.
+
+================================================================================================
+Que 23: Fact using recursion
+public class P23 {
+
+    public static void main(String[] args) {
+        int number = 5;  
+        long result = factorial(number);
+        System.out.println("Factorial of " + number + " is: " + result);
+    }
+
+    public static long factorial(int n) {
+        if (n == 0 || n == 1) {
+            return 1;
+        }
+        return n * factorial(n - 1);
+    }
+}
+
+================================================================================================
+Que 24: Decimal to roman
+
+import java.util.Scanner;
+ 
+public class P24
+{   
+    public static void main(String[] args) 
+    {
+        String[] romanSymbols = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] digi = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};         
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter The Number Between 1 and 3999");
+         
+        int No = sc.nextInt();
+        int CNo = No;
+        String roman = "";
+         
+        if (No >= 1 && No <= 3999)
+        {
+            for (int i = 0; i < 13; i++) 
+            {
+                while(No >= digi[i])
+                {
+                    No = No - digi[i];                     
+                    roman = roman + romanSymbols[i];
+                }
+            }
+             
+            System.out.println("Roman Equivalent Of "+CNo+" is : "+roman);
+        }
+        else
+        {
+            System.out.println("Invalid Number");
+        }
+    }
+}
+
+================================================================================================
+Que 25:  Toggle case a Sentence
+
+public class P25 {
+
+    public static void main(String[] args) {
+        String input = "Hello, World!";
+        String toggled = toggleCase(input);
+        System.out.println("Toggled Case: " + toggled);
+    }
+
+    public static String toggleCase(String s) {
+        char[] chars = s.toCharArray(); // Convert string to character array
+        for (int i = 0; i < chars.length; i++) {
+            char c = chars[i];
+            if (c >= 'A' && c <= 'Z') { // Check if character is uppercase
+                chars[i] = (char) (c + ('a' - 'A')); // Convert to lowercase
+            } else if (c >= 'a' && c <= 'z') { // Check if character is lowercase
+                chars[i] = (char) (c - ('a' - 'A')); // Convert to uppercase
+            }
+            // Non-alphabetic characters remain unchanged
+        }
+        return new String(chars);  
+    }
+}
+==============================================================================================
